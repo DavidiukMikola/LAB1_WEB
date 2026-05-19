@@ -8,11 +8,10 @@
 Розробити серверну частину Web-додатку для студентської дошки питань та відповідей (QA Board) з використанням Django та Django REST Framework. Реалізувати автентифікацію користувачів на базі токенів, CRUD операції для технічних питань та відповідей, інтерактивну систему голосування розробників, автоматичну генерацію OpenAPI схеми через Spectacular та авто-тести в Postman із динамічним збереженням токенів.
 
 ## Посилання на звіт
-* [Звіт на Google Drive](https://docs.google.com/document/d/1w5p5cz8QdrgppcF7L-26mFAumIWx8lxc/edit?usp=drive_web&ouid=113958679515510409400&rtpof=true) *(заміни YOUR_DOCUMENT_ID на посилання, коли завантажиш вордівський файл на свій диск)*
-
+* [Звіт на Google Drive](https://docs.google.com/document/d/1w5p5cz8QdrgppcF7L-26mFAumIWx8lxc/edit?usp=drive_web&ouid=113958679515510409400&rtpof=true) 
 ## Встановлення та запуск
 
 1. **Клонування репозиторію:**
 ```bash
-git clone [https://github.com/твоє_ім_я_користувача/qa-board-api.git](https://github.com/твоє_ім_я_користувача/qa-board-api.git)
-cd qa-board-api
+git clone https://github.com/DavidiukMikola/LAB1_WEB.git
+cd LAB1_WEB
