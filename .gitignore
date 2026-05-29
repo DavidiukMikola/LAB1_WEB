@@ -25,3 +25,14 @@ media/
 # OS
 .DS_Store
 Thumbs.db
+
+# Node / React
+node_modules/
+build/
+client/node_modules/
+client/build/
+
+# Android
+qaboard_android/.gradle/
+qaboard_android/app/build/
+qaboard_android/local.properties
