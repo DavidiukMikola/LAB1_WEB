@@ -6,6 +6,7 @@
 - Група: КВ-52мп
 
 - Лабораторна робота1: https://docs.google.com/document/d/11MzrvQQWnc2AIa-JKWWie0-sL68BdxxK/edit](https://docs.google.com/document/d/1OkhnW2twUAucFV6p4QSzku4YglAJrl-n/edit?usp=drive_web&ouid=113958679515510409400&rtpof=true
+- 
 -РГР: https://docs.google.com/document/d/11MzrvQQWnc2AIa-JKWWie0-sL68BdxxK/edit
 Student Q&A platform built as a Django REST API backend with a separate React SPA frontend.
 
