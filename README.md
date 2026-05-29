@@ -4,10 +4,9 @@
 
 - Студент: Давидюк Микола
 - Група: КВ-52мп
-- Назва / тема: Web UI Development Using React
-- Завдання: Розробити веб-додаток QA Board з окремим React SPA фронтендом, який працює поверх Django REST API та підтримує авторизацію, профіль користувача, список питань, деталі питання, створення питань і відповідей, голосування, маршрутизацію та глобальний стан.
-- URL звіту: https://docs.google.com/document/d/11MzrvQQWnc2AIa-JKWWie0-sL68BdxxK/edit
 
+- Лабораторна робота1: https://docs.google.com/document/d/11MzrvQQWnc2AIa-JKWWie0-sL68BdxxK/edit](https://docs.google.com/document/d/1OkhnW2twUAucFV6p4QSzku4YglAJrl-n/edit?usp=drive_web&ouid=113958679515510409400&rtpof=true
+-РГР: https://docs.google.com/document/d/11MzrvQQWnc2AIa-JKWWie0-sL68BdxxK/edit
 Student Q&A platform built as a Django REST API backend with a separate React SPA frontend.
 
 ## Stack
