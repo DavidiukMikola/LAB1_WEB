@@ -1,0 +1,38 @@
+{% extends 'frontend/base.html' %}
+
+{% block title %}Нове питання · Q&A Board{% endblock %}
+
+{% block content %}
+  <section class="page-hero">
+    <div>
+      <p class="eyebrow">Створення</p>
+      <h1>Додати нове питання</h1>
+      <p class="lede">
+        Заголовок має бути коротким, а опис - достатньо конкретним, щоб інші швидко зрозуміли контекст.
+      </p>
+    </div>
+  </section>
+
+  <section class="section form-layout">
+    <article class="form-card">
+      <form method="post" class="stack-form">
+        {% csrf_token %}
+        {% include 'frontend/includes/form_fields.html' with form=form %}
+        <p class="muted small-note">
+          Слаг буде згенеровано автоматично. Після публікації питання відразу з'явиться у каталозі.
+        </p>
+        <button class="button button-primary" type="submit">Опублікувати</button>
+      </form>
+    </article>
+
+    <aside class="note-card">
+      <p class="eyebrow">Порада</p>
+      <h2>Що додати в опис</h2>
+      <ul class="check-list">
+        <li>Де саме виникає помилка.</li>
+        <li>Який результат ви очікуєте.</li>
+        <li>Що вже пробували зробити.</li>
+      </ul>
+    </aside>
+  </section>
+{% endblock %}

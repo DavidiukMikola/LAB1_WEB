@@ -1,0 +1,73 @@
+{% extends 'frontend/base.html' %}
+
+{% block title %}Питання · Q&A Board{% endblock %}
+
+{% block content %}
+  <section class="page-hero page-hero-split">
+    <div>
+      <p class="eyebrow">База знань</p>
+      <h1>Усі опубліковані питання</h1>
+      <p class="lede">
+        Шукайте за заголовком, змістом або автором. Ця сторінка працює як каталог навчальної платформи.
+      </p>
+    </div>
+
+    <div class="hero-actions hero-actions-right">
+      {% if user.is_authenticated %}
+        <a class="button button-primary" href="{% url 'frontend:question-create' %}">Додати питання</a>
+      {% else %}
+        <a class="button button-primary" href="{% url 'frontend:auth' %}">Увійти, щоб питати</a>
+      {% endif %}
+    </div>
+  </section>
+
+  <section class="section compact-section">
+    <form class="search-form" method="get">
+      <input
+        type="search"
+        name="q"
+        value="{{ query }}"
+        placeholder="Пошук по питаннях..."
+        aria-label="Пошук по питаннях"
+      >
+      <button class="button button-primary" type="submit">Шукати</button>
+      {% if query %}
+        <a class="button button-ghost" href="{% url 'frontend:questions' %}">Скинути</a>
+      {% endif %}
+    </form>
+  </section>
+
+  <section class="section">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">Результати</p>
+        <h2>{{ questions|length }} знайдених питань</h2>
+      </div>
+      <a class="button button-ghost" href="{% url 'frontend:site-map' %}">Карта сайту</a>
+    </div>
+
+    <div class="card-grid">
+      {% for question in questions %}
+        <article class="content-card">
+          <div class="card-topline">
+            <span class="pill">{{ question.answer_count }} відповідей</span>
+            <span class="muted">{{ question.views_count }} переглядів</span>
+          </div>
+          <h3>
+            <a href="{% url 'frontend:question-detail' question.slug %}">{{ question.title }}</a>
+          </h3>
+          <p>{{ question.content|truncatechars:170 }}</p>
+          <div class="inline-meta">
+            <span>{{ question.author.full_name|default:question.author.username }}</span>
+            <span>{{ question.created_at|date:"d.m.Y" }}</span>
+          </div>
+        </article>
+      {% empty %}
+        <article class="empty-state">
+          <h3>За цим запитом нічого не знайдено.</h3>
+          <p>Спробуйте інший ключ або очистіть фільтр.</p>
+        </article>
+      {% endfor %}
+    </div>
+  </section>
+{% endblock %}

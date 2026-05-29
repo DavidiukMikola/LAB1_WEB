@@ -1,0 +1,55 @@
+{% extends 'frontend/base.html' %}
+
+{% block title %}Про проєкт · Q&A Board{% endblock %}
+
+{% block content %}
+  <section class="page-hero">
+    <div>
+      <p class="eyebrow">Про проєкт</p>
+      <h1>Навчальний Q&A-сайт як завершена лабораторна робота</h1>
+      <p class="lede">
+        Цей варіант поєднує Django REST API, серверно-рендерені сторінки, адаптивну стилістику, профіль
+        користувача та React-віджет, який працює поверх API.
+      </p>
+    </div>
+  </section>
+
+  <section class="section feature-grid">
+    <article class="feature-card">
+      <p class="eyebrow">Backend</p>
+      <h3>Django + DRF</h3>
+      <p>API для реєстрації, логіну, профілю, питань, відповідей і голосування.</p>
+    </article>
+    <article class="feature-card">
+      <p class="eyebrow">Frontend</p>
+      <h3>Templates + JavaScript</h3>
+      <p>Серверні сторінки з адаптивною версткою, темою і React-віджетом на головній.</p>
+    </article>
+    <article class="feature-card">
+      <p class="eyebrow">Database</p>
+      <h3>SQLite</h3>
+      <p>Дані зберігаються у локальній базі, а профільні зміни та контент відображаються одразу.</p>
+    </article>
+  </section>
+
+  <section class="section content-split">
+    <article class="content-card">
+      <p class="eyebrow">Що вже є</p>
+      <ul class="check-list">
+        <li>Сторінка головної дошки з картками та статистикою.</li>
+        <li>Каталог питань з пошуком та окремою сторінкою деталі.</li>
+        <li>Авторизація, профіль та створення нового питання.</li>
+        <li>API документація і службова інформація про застосунок.</li>
+      </ul>
+    </article>
+
+    <aside class="note-card">
+      <p class="eyebrow">Показники</p>
+      <ul class="summary-list">
+        <li><span>Питання</span><strong>{{ stats.questions }}</strong></li>
+        <li><span>Відповіді</span><strong>{{ stats.answers }}</strong></li>
+        <li><span>Користувачі</span><strong>{{ stats.users }}</strong></li>
+      </ul>
+    </aside>
+  </section>
+{% endblock %}

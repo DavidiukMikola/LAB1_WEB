@@ -1,0 +1,106 @@
+{% extends 'frontend/base.html' %}
+
+{% block title %}Профіль · Q&A Board{% endblock %}
+
+{% block content %}
+  <section class="detail-hero">
+    <div class="profile-hero">
+      {% if user.avatar %}
+        <img class="avatar avatar-large" src="{{ user.avatar.url }}" alt="{{ user.full_name|default:user.username }}">
+      {% else %}
+        <div class="avatar avatar-large avatar-fallback">
+          {{ user.first_name|default:user.username|slice:":1" }}
+        </div>
+      {% endif %}
+      <div>
+        <p class="eyebrow">Профіль</p>
+        <h1>{{ user.full_name|default:user.username }}</h1>
+        <p class="lede">{{ user.bio|default:"Користувач ще не додав опис профілю." }}</p>
+        <div class="inline-meta">
+          <span>{{ user.email }}</span>
+          <span>{{ user.created_at|date:"d.m.Y" }}</span>
+          <span>{{ my_questions|length }} питань</span>
+          <span>{{ my_answers|length }} відповідей</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section form-layout">
+    <article class="form-card">
+      <p class="eyebrow">Редагування</p>
+      <h2>Оновити дані профілю</h2>
+      <form method="post" enctype="multipart/form-data" class="stack-form">
+        {% csrf_token %}
+        {% include 'frontend/includes/form_fields.html' with form=profile_form %}
+        <button class="button button-primary" type="submit">Зберегти зміни</button>
+      </form>
+    </article>
+
+    <aside class="note-card">
+      <p class="eyebrow">Активність</p>
+      <h2>Мої показники</h2>
+      <ul class="summary-list">
+        <li><span>Питання</span><strong>{{ my_questions|length }}</strong></li>
+        <li><span>Відповіді</span><strong>{{ my_answers|length }}</strong></li>
+        <li><span>Стан</span><strong>{% if user.is_staff %}Модератор{% else %}Учасник{% endif %}</strong></li>
+      </ul>
+    </aside>
+  </section>
+
+  <section class="section">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">Мої питання</p>
+        <h2>Опубліковані записи</h2>
+      </div>
+    </div>
+
+    <div class="card-grid">
+      {% for question in my_questions %}
+        <article class="content-card">
+          <div class="card-topline">
+            <span class="pill">{{ question.answer_count }} відповідей</span>
+            <span class="muted">{{ question.views_count }} переглядів</span>
+          </div>
+          <h3><a href="{% url 'frontend:question-detail' question.slug %}">{{ question.title }}</a></h3>
+          <p>{{ question.content|truncatechars:150 }}</p>
+        </article>
+      {% empty %}
+        <article class="empty-state">
+          <h3>Поки що немає опублікованих питань.</h3>
+          <p>Створіть перше питання, щоб заповнити профіль активністю.</p>
+        </article>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">Мої відповіді</p>
+        <h2>Остання активність</h2>
+      </div>
+    </div>
+
+    <div class="answers-list">
+      {% for answer in my_answers %}
+        <article class="answer-card">
+          <div class="card-topline">
+            <span class="pill">Рейтинг {{ answer.rating }}</span>
+            <span class="muted">{{ answer.created_at|date:"d.m.Y H:i" }}</span>
+          </div>
+          <p>{{ answer.content|truncatechars:180 }}</p>
+          <div class="inline-meta">
+            <a href="{% url 'frontend:question-detail' answer.question.slug %}">{{ answer.question.title }}</a>
+          </div>
+        </article>
+      {% empty %}
+        <article class="empty-state">
+          <h3>Відповідей ще немає.</h3>
+          <p>Ваші відповіді з'являться тут після публікації.</p>
+        </article>
+      {% endfor %}
+    </div>
+  </section>
+{% endblock %}

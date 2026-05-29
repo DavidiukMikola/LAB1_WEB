@@ -1,0 +1,42 @@
+{% extends 'frontend/base.html' %}
+
+{% block title %}Авторизація · Q&A Board{% endblock %}
+
+{% block content %}
+  <section class="page-hero page-hero-split">
+    <div>
+      <p class="eyebrow">Акаунт</p>
+      <h1>Вхід і реєстрація</h1>
+      <p class="lede">
+        Один екран для доступу до профілю, створення питань і взаємодії з дошкою.
+      </p>
+    </div>
+    <div class="hero-actions hero-actions-right">
+      <a class="button button-ghost" href="{% url 'frontend:site-map' %}">Карта сайту</a>
+    </div>
+  </section>
+
+  <section class="section auth-grid">
+    <article class="form-card">
+      <p class="eyebrow">Вхід</p>
+      <h2>Повернутися до платформи</h2>
+      <form method="post" class="stack-form">
+        {% csrf_token %}
+        <input type="hidden" name="form_type" value="login">
+        {% include 'frontend/includes/form_fields.html' with form=login_form %}
+        <button class="button button-primary" type="submit">Увійти</button>
+      </form>
+    </article>
+
+    <article class="form-card">
+      <p class="eyebrow">Реєстрація</p>
+      <h2>Створити новий акаунт</h2>
+      <form method="post" enctype="multipart/form-data" class="stack-form">
+        {% csrf_token %}
+        <input type="hidden" name="form_type" value="register">
+        {% include 'frontend/includes/form_fields.html' with form=registration_form %}
+        <button class="button button-primary" type="submit">Зареєструватися</button>
+      </form>
+    </article>
+  </section>
+{% endblock %}

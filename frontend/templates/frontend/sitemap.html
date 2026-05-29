@@ -1,0 +1,30 @@
+{% extends 'frontend/base.html' %}
+
+{% block title %}Карта сайту · Q&A Board{% endblock %}
+
+{% block content %}
+  <section class="page-hero">
+    <div>
+      <p class="eyebrow">Карта сайту</p>
+      <h1>Структура сторінок</h1>
+      <p class="lede">
+        Це компактна карта для звіту та швидкої навігації під час демонстрації лабораторної.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="card-grid sitemap-grid">
+      {% for page in pages %}
+        <article class="content-card">
+          <p class="eyebrow">Сторінка</p>
+          <h3><a href="{{ page.url }}">{{ page.title }}</a></h3>
+          <p>{{ page.description }}</p>
+          <div class="inline-meta">
+            <a href="{{ page.url }}">{{ page.url }}</a>
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+  </section>
+{% endblock %}

@@ -1,0 +1,97 @@
+{% extends 'frontend/base.html' %}
+
+{% block title %}{{ question.title }} · Q&A Board{% endblock %}
+
+{% block content %}
+  <section class="detail-hero">
+    <div>
+      <p class="eyebrow">Питання</p>
+      <h1>{{ question.title }}</h1>
+      <div class="inline-meta">
+        <span>{{ question.author.full_name|default:question.author.username }}</span>
+        <span>{{ question.created_at|date:"d.m.Y H:i" }}</span>
+        <span>{{ question.views_count }} переглядів</span>
+        <span>{{ answers|length }} відповідей</span>
+      </div>
+    </div>
+
+    <div class="hero-actions hero-actions-right">
+      <a class="button button-ghost" href="{% url 'frontend:questions' %}">До списку</a>
+      {% if user.is_authenticated %}
+        <a class="button button-soft" href="{% url 'frontend:question-create' %}">Нове питання</a>
+      {% endif %}
+    </div>
+  </section>
+
+  <section class="section content-split">
+    <article class="content-card">
+      <p>{{ question.content|linebreaksbr }}</p>
+    </article>
+
+    <aside class="note-card">
+      <p class="eyebrow">Стан</p>
+      <h2>Підсумок</h2>
+      <ul class="summary-list">
+        <li><span>Автор</span><strong>{{ question.author.full_name|default:question.author.username }}</strong></li>
+        <li><span>Статус</span><strong>{{ question.get_status_display }}</strong></li>
+        <li><span>Перегляди</span><strong>{{ question.views_count }}</strong></li>
+        <li><span>Відповіді</span><strong>{{ answers|length }}</strong></li>
+      </ul>
+    </aside>
+  </section>
+
+  <section class="section">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">Відповіді</p>
+        <h2>Обговорення</h2>
+      </div>
+    </div>
+
+    <div class="answers-list">
+      {% for answer in answers %}
+        <article class="answer-card {% if answer.is_correct %}answer-card-highlight{% endif %}">
+          <div class="card-topline">
+            <span class="pill">Рейтинг {{ answer.rating }}</span>
+            {% if answer.is_correct %}
+              <span class="pill pill-positive">Правильна відповідь</span>
+            {% endif %}
+            <span class="muted">{{ answer.created_at|date:"d.m.Y H:i" }}</span>
+          </div>
+          <p>{{ answer.content|linebreaksbr }}</p>
+          <div class="inline-meta">
+            <span>{{ answer.author.full_name|default:answer.author.username }}</span>
+            <span>Лайки {{ answer.likes_count }}</span>
+            <span>Дизлайки {{ answer.dislikes_count }}</span>
+          </div>
+        </article>
+      {% empty %}
+        <article class="empty-state">
+          <h3>Поки що немає відповідей.</h3>
+          <p>Будьте першим, хто допоможе з рішенням.</p>
+        </article>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section class="section form-layout">
+    {% if user.is_authenticated %}
+      <article class="form-card">
+        <form method="post" class="stack-form">
+          {% csrf_token %}
+          {% include 'frontend/includes/form_fields.html' with form=form %}
+          <button class="button button-primary" type="submit">Додати відповідь</button>
+        </form>
+      </article>
+    {% else %}
+      <article class="note-card">
+        <p class="eyebrow">Авторизація</p>
+        <h2>Увійдіть, щоб відповідати</h2>
+        <p class="muted">
+          Зареєстровані користувачі можуть залишати відповіді, редагувати свій профіль і створювати нові питання.
+        </p>
+        <a class="button button-primary" href="{% url 'frontend:auth' %}">До входу</a>
+      </article>
+    {% endif %}
+  </section>
+{% endblock %}

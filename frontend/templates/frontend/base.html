@@ -1,0 +1,106 @@
+{% load static %}
+<!doctype html>
+<html lang="uk" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0f766e">
+  <meta
+    name="description"
+    content="Q&A Board - студентська платформа питань і відповідей з адаптивним інтерфейсом, профілями та API."
+  >
+  <title>{% block title %}Q&A Board{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'frontend/css/styles.css' %}">
+  {% block extra_head %}{% endblock %}
+</head>
+<body>
+  <div class="page-sheen page-sheen-a"></div>
+  <div class="page-sheen page-sheen-b"></div>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="{% url 'frontend:home' %}" aria-label="Q&A Board">
+        <span class="brand-mark">Q</span>
+        <span class="brand-text">
+          <strong>Q&A Board</strong>
+          <small>Платформа знань</small>
+        </span>
+      </a>
+
+      <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="site-nav">
+        Меню
+      </button>
+
+      <nav class="site-nav" id="site-nav" data-site-nav>
+        <a href="{% url 'frontend:home' %}" class="{% if request.resolver_match.url_name == 'home' %}is-active{% endif %}">Головна</a>
+        <a href="{% url 'frontend:questions' %}" class="{% if request.resolver_match.url_name == 'questions' %}is-active{% endif %}">Питання</a>
+        <a href="{% url 'frontend:about' %}" class="{% if request.resolver_match.url_name == 'about' %}is-active{% endif %}">Про проєкт</a>
+        <a href="{% url 'frontend:site-map' %}" class="{% if request.resolver_match.url_name == 'site-map' %}is-active{% endif %}">Карта сайту</a>
+        <a href="{% url 'redoc' %}">API docs</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="theme-toggle" type="button" data-theme-toggle aria-label="Перемкнути тему">
+          Тема
+        </button>
+        {% if user.is_authenticated %}
+          <a class="button button-soft" href="{% url 'frontend:question-create' %}">Нове питання</a>
+          <a class="chip" href="{% url 'frontend:profile' %}">
+            {% if user.first_name %}{{ user.first_name }}{% else %}{{ user.username }}{% endif %}
+          </a>
+          <form class="inline-form" method="post" action="{% url 'frontend:logout' %}">
+            {% csrf_token %}
+            <button class="button button-ghost" type="submit">Вийти</button>
+          </form>
+        {% else %}
+          <a class="button button-soft" href="{% url 'frontend:auth' %}">Увійти</a>
+        {% endif %}
+      </div>
+    </div>
+  </header>
+
+  <main class="page-shell">
+    {% if messages %}
+      <section class="message-stack" aria-live="polite">
+        {% for message in messages %}
+          <div class="message message-{{ message.tags|default:'info' }}">{{ message }}</div>
+        {% endfor %}
+      </section>
+    {% endif %}
+
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-grid">
+      <div>
+        <p class="eyebrow">Q&A Board</p>
+        <h2>Лабораторна робота з живим інтерфейсом</h2>
+        <p class="muted">
+          Django API, адаптивний фронтенд, React-віджет на головній сторінці та база даних SQLite.
+        </p>
+      </div>
+      <div>
+        <p class="eyebrow">Швидкі посилання</p>
+        <ul class="footer-links">
+          <li><a href="{% url 'frontend:questions' %}">Питання</a></li>
+          <li><a href="{% url 'frontend:auth' %}">Авторизація</a></li>
+          <li><a href="{% url 'frontend:site-map' %}">Карта сайту</a></li>
+          <li><a href="{% url 'api:app-info' %}">API інформація</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="eyebrow">Документація</p>
+        <ul class="footer-links">
+          <li><a href="{% url 'redoc' %}">OpenAPI / ReDoc</a></li>
+          <li><a href="{% url 'schema' %}">OpenAPI schema</a></li>
+          <li><a href="{% url 'admin:index' %}">Адмін-панель</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <script src="{% static 'frontend/js/app.js' %}"></script>
+  {% block extra_js %}{% endblock %}
+</body>
+</html>

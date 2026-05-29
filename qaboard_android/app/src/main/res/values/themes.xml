@@ -1,0 +1,9 @@
+<resources>
+    <style name="Theme.QABoard" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <item name="colorPrimary">#0f766e</item>
+        <item name="colorPrimaryVariant">#0d615a</item>
+        <item name="colorOnPrimary">@android:color/white</item>
+        <item name="colorSecondary">#c56d3d</item>
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+    </style>
+</resources>
